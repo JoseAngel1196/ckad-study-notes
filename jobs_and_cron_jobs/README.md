@@ -26,7 +26,7 @@ kind: Job
 metadata:
   name: print
 spec:
-	ttlSecondsAfterFinished: 3600 # 1 hour.
+  ttlSecondsAfterFinished: 3600 # 1 hour.
   template:
     spec:
       containers:
