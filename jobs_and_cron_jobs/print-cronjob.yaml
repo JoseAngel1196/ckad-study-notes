@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  creationTimestamp: null
+  name: print-cronjob
+spec:
+  jobTemplate:
+    metadata:
+      name: print-cronjob
+    spec:
+      template:
+        spec:
+          containers:
+          - image: busybox:stable
+            name: print-cronjob
+            command: ["echo", "hello world"]
+          restartPolicy: OnFailure
+  schedule: '*/1 * * * *'
+status: {}

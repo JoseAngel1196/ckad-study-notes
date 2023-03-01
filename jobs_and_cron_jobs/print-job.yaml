@@ -1,0 +1,13 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: print-job
+spec:
+  template:
+    spec:
+      containers:
+      - image: busybox:stable
+        name: print-job
+        command: ["echo", "hello world!"]
+      restartPolicy: Never
+status: {}
