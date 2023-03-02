@@ -6,14 +6,14 @@ spec:
   initContainers:
   - name: init
     image: nginx
-    command: ['sh', '-c', 'curl -o /output/dog.jpg https://www.google.com/url?sa=i&url=https%3A%2F%2Fen.wiktionary.org%2Fwiki%2Fdog&psig=AOvVaw2jfT3eGKH8U5fskdbkiY7k&ust=1677877539976000&source=images&cd=vfe&ved=0CA8QjRxqFwoTCIj20IeTvv0CFQAAAAAdAAAAABAE']
+    command: ['sh', '-c', 'curl -o /output/dog.jpg https://github.com/JoseAngel1196/ckad-study-notes/blob/master/init_container/images/dog.jpg']
     volumeMounts:
     - name: shared
       mountPath: /output
   containers:
   - name: main
     image: busybox:stable
-    command: ["sh", "-c", "while true; do cat /load/dog.jpg; done"]
+    command: ["sh", "-c", "while true; do ls /load/dog.jpg; done"]
     volumeMounts:
     - name: shared
       mountPath: /load
