@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: emptydir-exercise-2
+  labels:
+   exercise: two
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      exercise: two
+  template:
+    metadata:
+      labels:
+        exercise: two
+    spec:
+      initContainers:
+      - name: init-container
+        image: busybox:stable
+        command: ['sh', '-c', 'echo "Hello, World!" > /data/hello.txt']
+        volumeMounts:
+        - name: emptydir-vol
+          mountPath: /data
+      containers:
+      - name: emptydir-containers
+        image: busybox:stable
+        command: ['sh', '-c', 'cat /data/hello.txt']
+        volumeMounts:
+        - name: emptydir-vol
+          mountPath: /data
+      volumes:
+      - name: emptydir-vol
+        emptyDir: {}

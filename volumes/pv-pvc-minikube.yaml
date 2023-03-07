@@ -1,0 +1,52 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: minikube-pv
+spec:
+  storageClassName: minikube
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 1Gi
+  hostPath:
+    path: /jose-fs
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: minikube-pvc
+spec:
+  storageClassName: minikube
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: minikube-deployment
+  labels:
+    app: minikube
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: minikube
+  template:
+    metadata:
+      labels:
+        app: minikube
+    spec:
+      containers:
+      - name: minikube
+        image: busybox:stable
+        command: ['sh', '-c', 'while true; do ls /data; sleep 10; done']
+        volumeMounts:
+        - name: pod-pvc
+          mountPath: /data
+      volumes:
+      - name: pod-pvc
+        persistentVolumeClaim:
+          claimName: minikube-pvc 

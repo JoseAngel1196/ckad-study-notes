@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: emptydir-exercise-1
+spec:
+  restartPolicy: OnFailure
+  containers:
+  - name: writer
+    image: busybox:stable
+    command: ['sh', '-c', 'echo "you can do it!" > /data/data.txt']
+    volumeMounts:
+    - mountPath: /data
+      name: emptydir-vol
+  - name: reader
+    image: busybox:stable
+    command: ['sh', '-c', 'cat /data/data.txt']
+    volumeMounts:
+    - mountPath: /data
+      name: emptydir-vol
+  volumes:
+  - name: emptydir-vol
+    emptyDir: {}
