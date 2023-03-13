@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scale-deployment
+  labels:
+    app: scale-deploy
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: scale-deploy
+  template:
+    metadata:
+      labels:
+        app: scale-deploy
+    spec:
+      containers:
+      - name: scale-deploy
+        image: nginx:stable
+        ports:
+        - containerPort: 80
